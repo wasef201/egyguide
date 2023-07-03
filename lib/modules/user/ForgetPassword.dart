@@ -10,6 +10,8 @@ class ForgetPassword extends StatefulWidget {
 }
 
 class _ForgetPasswordState extends State<ForgetPassword> {
+  final phone = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,9 +26,13 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       ),
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/imges/wasef.png'),fit: BoxFit.fill)),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/imges/wasef.png'),
+                  fit: BoxFit.fill)),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 15.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 12.0, vertical: 15.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -69,9 +75,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   child: Column(
                     children: [
                       InputField(
-                          hintText: "Enter your phone number",
-                          icon: Icons.phone,
-                          invisible: false),
+                        hintText: "Enter your phone number",
+                        icon: Icons.phone,
+                        invisible: false,
+                        controller: phone,
+                      ),
                       SizedBox(
                         height: 20,
                       ),

@@ -60,3 +60,31 @@ final kWhiteInputFieldStyle = BoxDecoration(
   color: Colors.white,
   borderRadius: BorderRadius.circular(20.0),
 );
+
+
+// Mora
+
+Future NavigateToAndFinish(
+    context, {
+      required Widget widget,
+    }) =>
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => widget,
+        ),
+            (route) => false);
+
+
+
+
+
+
+
+
+/// Var
+
+
+  String? token;
+  String? username;
+  String? email;
+  int? userID;

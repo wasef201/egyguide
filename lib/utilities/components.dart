@@ -140,22 +140,34 @@ class Seperator extends StatelessWidget {
 }
 
 class wideActionButton extends StatelessWidget {
-  wideActionButton({required this.hint});
+  wideActionButton({required this.hint, this.onPressed});
   String hint;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
+    // return Container(
+    //   decoration: BoxDecoration(
+    //     color: Color(0xFFFF757C),
+    //     borderRadius: BorderRadius.circular(20),
+    //   ),
+    //   child: Center(
+    //     child: Text(
+    //       hint,
+    //       textAlign: TextAlign.center,
+    //       style: kWideActionButtonStyle,
+    //     ),
+    //   ),
+    // );
     return Container(
-      decoration: BoxDecoration(
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      child: MaterialButton(
+        onPressed: onPressed,
+        child: Text('${hint}'),
         color: Color(0xFFFF757C),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Center(
-        child: Text(
-          hint,
-          textAlign: TextAlign.center,
-          style: kWideActionButtonStyle,
-        ),
+        textColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+
       ),
     );
   }
@@ -195,21 +207,25 @@ class InputField extends StatelessWidget {
       {super.key,
       required this.hintText,
       required this.icon,
-      required this.invisible});
+      required this.invisible, required this.controller,
+      });
 
   final String hintText;
   final IconData icon;
   final bool invisible;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
       decoration: kInputFieldStyle,
+      margin: EdgeInsets.symmetric(horizontal: 10),
       height: 60.0,
-      child: TextField(
+      child: TextFormField(
         obscureText: invisible,
         keyboardType: TextInputType.emailAddress,
+        controller: controller,
         style: TextStyle(
           color: Colors.grey,
           fontFamily: 'Poppins',
@@ -240,6 +256,13 @@ class InputField extends StatelessWidget {
           hintText: hintText,
           hintStyle: kHintTextStyle,
         ),
+        validator: (value) {
+          if(value == null || value.isEmpty)
+          {
+            return 'This fiel is required';
+          }
+        },
+
       ),
     );
   }
@@ -267,16 +290,18 @@ class redircetText extends StatelessWidget {
   }
 }
 class WhiteInputField extends StatelessWidget {
-  const WhiteInputField({Key? key, required this.hintText}) : super(key: key);
+  const WhiteInputField({Key? key, required this.hintText, required this.controller}) : super(key: key);
 
   final String hintText;
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerRight,
       height: 60,
       decoration: kWhiteInputFieldStyle,
-      child: TextField(
+      child: TextFormField(
+        controller: controller,
         keyboardType: TextInputType.emailAddress,
         textAlign: TextAlign.right,
         style: TextStyle(

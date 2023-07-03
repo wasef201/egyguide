@@ -1,30 +1,75 @@
+import 'package:bloc/bloc.dart';
+import 'package:egyuide/layout/cubit/cubit.dart';
+import 'package:egyuide/layout/home.dart';
+import 'package:egyuide/modules/onboarding/onboarding.dart';
+import 'package:egyuide/modules/user/cubit/cubit.dart';
+import 'package:egyuide/modules/user/login.dart';
 import 'package:egyuide/spalsh.dart';
+import 'package:egyuide/utilities/bloc_observer.dart';
+import 'package:egyuide/utilities/cache_helper.dart';
+import 'package:egyuide/utilities/constants.dart';
+import 'package:egyuide/utilities/dio_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-void main() {
-  runApp( MyApp());
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MyBlocObserver();
+  await DioHelper.init();
+  await CacheHelper.init();
+  late Widget widget;
+
+  bool? onBoarding = await CacheHelper.getData(key: 'onBoarding');
+  token = await CacheHelper.getData(key: 'token');
+  username = await CacheHelper.getData(key: 'username');
+  email = await CacheHelper.getData(key: 'email');
+  userID = await CacheHelper.getData(key: 'userID');
+
+  if (onBoarding != null) {
+    if (token != null) {
+      widget = Home();
+    } else {
+      widget = LogIn();
+    }
+  } else {
+    widget = Onboard();
+  }
+
+  runApp(MyApp(
+    widget: widget,
+  ));
 }
 
 class MyApp extends StatelessWidget {
+  final Widget widget;
+
+  const MyApp({super.key, required this.widget});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Splash(),
-      debugShowCheckedModeBanner: false,
-      title: 'Egy Guide',
-
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+    return MultiBlocProvider(
+      providers:
+      [
+        BlocProvider( create: (context) => AppCubit()..getHomePosts()..getTopRanked()..getUserProfilePageData(userID: userID ?? 0),),
+        BlocProvider( create: (context) => LoginCubit(),),
       ],
-      supportedLocales: [
-        Locale('ar'), // English
-      ],
-theme: ThemeData(fontFamily: 'cairo'),
-
-
+      child: MaterialApp(
+        home: Splash(
+          widget: widget,
+        ),
+        debugShowCheckedModeBanner: false,
+        title: 'Egy Guide',
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('ar'), // English
+        ],
+        theme: ThemeData(fontFamily: 'cairo'),
+      ),
     );
   }
 }
-

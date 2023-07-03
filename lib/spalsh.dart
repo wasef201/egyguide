@@ -6,13 +6,16 @@ import 'package:lottie/lottie.dart';
 
 
 class Splash extends StatelessWidget {
+  final Widget widget;
+
+  const Splash({super.key, required this.widget});
 
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
         duration: 3000,
         splash: Lottie.asset('assets/json/mysplash.json'),
-        nextScreen: Onboard(),
+        nextScreen: widget,
         splashTransition: SplashTransition.fadeTransition,
         pageTransitionType: PageTransitionType.leftToRightWithFade,
         backgroundColor: Color(0xff0e7886),

@@ -1,5 +1,6 @@
 import 'package:egyuide/layout/home.dart';
 import 'package:egyuide/modules/user/login.dart';
+import 'package:egyuide/utilities/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -146,8 +147,9 @@ class _OnboardState extends State<Onboard> {
                       border: Border.all(color: Color(0xffff757c))),
                   child: MaterialButton(
                     onPressed: () {
+                      CacheHelper.saveData(key: 'onBoarding', value: true);
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Home(),
+                        builder: (context) => LogIn(),
                       ));
                     },
                     child: Text('تخطي', style: TextStyle(color: Colors.black)),
@@ -169,6 +171,7 @@ class _OnboardState extends State<Onboard> {
                   child: MaterialButton(
                     onPressed: () {
                       if (controller.page!.round() == 2) {
+                        CacheHelper.saveData(key: 'onBoarding', value: true);
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => LogIn(),
                         ));
