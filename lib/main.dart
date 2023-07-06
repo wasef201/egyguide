@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers:
       [
-        BlocProvider( create: (context) => AppCubit()..getHomePosts()..getTopRanked()..getUserProfilePageData(userID: userID ?? 0),),
+        BlocProvider( create: (context) => AppCubit()..getHomePosts()..getTopRanked()..updatedUnFollowedUsers()),
         BlocProvider( create: (context) => LoginCubit(),),
       ],
       child: MaterialApp(

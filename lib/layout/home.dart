@@ -4,6 +4,8 @@ import 'package:egyuide/layout/cubit/cubit.dart';
 import 'package:egyuide/layout/cubit/states.dart';
 import 'package:egyuide/modules/add/add.dart';
 import 'package:egyuide/modules/home/newsfeed.dart';
+import 'package:egyuide/modules/otherpages/SettingPage.dart';
+import 'package:egyuide/modules/profile/showProfile.dart';
 import 'package:egyuide/modules/states/states.dart';
 import 'package:egyuide/utilities/constants.dart';
 import 'package:flutter/material.dart';
@@ -18,32 +20,40 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  @override
   int _page = 0;
   final String cert = 'assets/svg/cert.svg';
 
   List<Widget> screens =
   [
- News(),
+    News(),
+    SettingPage(),
     States(),
-    States(),
-    ProfilePage(),
+    ProfilePage(userProfileName: '${username}',),
 
   ];
-  int index = 0;
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
-  void _onItemTapped(int index) {
-    index == 1
-        ? _drawerKey.currentState?.openDrawer()
-        : setState(() {
-      _page = index;
-    });
-  }
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppStates>(
-      listener: (context, state) {},
+      listener: (context, state)
+      {
+      },
       builder: (context, state) {
+        var cubit = AppCubit.get(context);
+
+        void _onItemTapped(int index) {
+          if(index == 3)
+            cubit.getUserProfilePageData(userID: userID ?? 15);
+          setState(() {
+            _page = index;
+          });
+          /*index == 1
+              ? _drawerKey.currentState?.openDrawer()
+              : setState(() {
+            _page = index;
+          });*/
+        }
+
         return Container(
           decoration: BoxDecoration(gradient: LinearGradient(colors: [
             mc,
@@ -138,6 +148,8 @@ class _HomeState extends State<Home> {
             extendBody: true,
             floatingActionButton: FloatingActionButton(
               onPressed: () {
+                cubit.selectedCatItem = null;
+                cubit.selectedStateItem = null;
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => CreatePost(),
                 ));

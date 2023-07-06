@@ -15,6 +15,7 @@ class PostsData {
   String? countryId;
   String? stateId;
   String? title;
+  String? avatar;
   List<Media>? media;
   User? user;
   late String createDate;
@@ -26,6 +27,7 @@ class PostsData {
     countryId = json['country_id'];
     stateId = json['state_id'];
     title = json['title'];
+    avatar = json['avatar'];
     createDate = json['created_at'];
     if (json['media'] != null) {
       media = <Media>[];

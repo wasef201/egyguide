@@ -4,6 +4,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:egyuide/layout/cubit/cubit.dart';
 import 'package:egyuide/layout/cubit/states.dart';
 import 'package:egyuide/utilities/components.dart';
+import 'package:egyuide/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,13 +18,15 @@ class CreatePost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is AddNewPostSuccess)
+        {
+          showMessage(message: 'تم النشر بنجاح!', state: ToastStates.success);
+          Navigator.of(context).pop();
+        }
+      },
       builder: (context, state) {
-
         var cubit = AppCubit.get(context);
-
-
-
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -43,26 +46,29 @@ class CreatePost extends StatelessWidget {
               ),
             ),
             actions: [
-              if(state is! AddNewPostLoading)
+              if (state is! AddNewPostLoading)
                 Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: 100,
-                  child: wideActionButton(hint: "اضافة",onPressed: ()
-                  {
-                    cubit.addNewPost(title: title.text, media: cubit!.finalImage ?? XFile('path'));
-                    print('### title: ${title.text}');
-
-                  }),
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: 100,
+                    child: wideActionButton(
+                        hint: "اضافة",
+                        onPressed: () {
+                          int cat_id = itemsCategoryIndex[itemsCategory.indexOf(cubit.selectedCatItem ?? 'Gym')];
+                          int state_id = itemsStateIndex[itemsState.indexOf(cubit.selectedStateItem ?? 'Dakahlia')];
+                          cubit.addNewPost(title: title.text, media: cubit!.finalImage ?? XFile('path'), cat_id: cat_id, state_id: state_id).then((value) {title.clear();});
+                        }),
+                  ),
                 ),
-              ),
-              if(state is AddNewPostLoading)
+              if (state is AddNewPostLoading)
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Center(child: CircularProgressIndicator(color: Color(0xFFFF757C),)),
+                  child: Center(
+                      child: CircularProgressIndicator(
+                    color: Color(0xFFFF757C),
+                  )),
                 ),
             ],
-
           ),
           body: SafeArea(
             child: SingleChildScrollView(
@@ -83,7 +89,7 @@ class CreatePost extends StatelessWidget {
                             ),
                           ),
                           title: Text(
-                            "عمرو محمد",
+                            "${username}",
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
@@ -94,48 +100,52 @@ class CreatePost extends StatelessWidget {
                       ),
                       Expanded(
                         flex: 1,
-                        child: WhiteInputField(hintText: "اضف عنوان",controller: title,),
+                        child: WhiteInputField(
+                          hintText: "اضف عنوان",
+                          controller: title,
+                        ),
                       ),
                       SizedBox(
                         height: 15,
                       ),
                       if (cubit.image == null && cubit.finalImage == null)
                         Expanded(
-                        flex: 5,
-                        child: GestureDetector(
-                          onTap: () async {
-                            print("### Image Before Pick");
-                            print(cubit.image?.path.toString());
-                            await cubit.pickFile();
-                          },
-                          child: DottedBorder(
-                            radius: Radius.circular(12),
-                            borderType: BorderType.RRect,
-                            color: Colors.grey,
-                            child: Container(
-                              child: Center(
-                                child: DottedBorder(
-                                  radius: Radius.circular(12),
-                                  borderType: BorderType.RRect,
-                                  color: Colors.grey,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(30),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          Icons.cloud_upload_rounded,
-                                          color: Color(0xFF0E7886),
-                                        ),
-                                        Text(
-                                          "ارفع هنا",
-                                          style: TextStyle(
-                                              fontFamily: "Poppins",
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 24,
-                                              color: Color(0xFF0E7886)),
-                                        ),
-                                      ],
+                          flex: 5,
+                          child: GestureDetector(
+                            onTap: () async {
+                              print("### Image Before Pick");
+                              print(cubit.image?.path.toString());
+                              await cubit.pickFile();
+                            },
+                            child: DottedBorder(
+                              radius: Radius.circular(12),
+                              borderType: BorderType.RRect,
+                              color: Colors.grey,
+                              child: Container(
+                                child: Center(
+                                  child: DottedBorder(
+                                    radius: Radius.circular(12),
+                                    borderType: BorderType.RRect,
+                                    color: Colors.grey,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(30),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.cloud_upload_rounded,
+                                            color: Color(0xFF0E7886),
+                                          ),
+                                          Text(
+                                            "ارفع هنا",
+                                            style: TextStyle(
+                                                fontFamily: "Poppins",
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 24,
+                                                color: Color(0xFF0E7886)),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -143,7 +153,6 @@ class CreatePost extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
                       if (cubit.image != null || cubit.finalImage != null)
                         Expanded(
                           flex: 5,
@@ -156,44 +165,63 @@ class CreatePost extends StatelessWidget {
                           children: [
                             ListTile(
                               leading: Text(
-                                "اضافة ريل",
+                                "الفئة",
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16,
                                 ),
                               ),
-                              trailing: Icon(
-                                Icons.ondemand_video_sharp,
-                                color: Color(0xFF0E7886),
+                              trailing: DropdownButton<String>(
+                                items: itemsCategory
+                                    .map((item) => DropdownMenuItem<String>(
+                                          value: item,
+                                          child: Text(item),
+                                        )).toList(),
+                                onChanged: (value) {
+                                  cubit.selectCatItemChange(item: value.toString());
+                                },
+                                value: cubit.selectedCatItem ??= itemsCategory.first,
                               ),
                             ),
                             ListTile(
                               leading: Text(
-                                "اضافة صورة",
+                                "المحافظة",
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16,
                                 ),
                               ),
-                              trailing: Icon(
-                                Icons.image,
-                                color: Color(0xFF0E7886),
+                              trailing: DropdownButton<String>(
+                                borderRadius: BorderRadius.circular(12),
+                                items: itemsState
+                                    .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(item),
+                                )).toList(),
+                                onChanged: (value) {
+                                  cubit.selectStateItemChange(item: value.toString());
+                                },
+                                value: cubit.selectedStateItem ??= itemsState.first,
                               ),
                             ),
                             ListTile(
                               leading: Text(
-                                "اضافة فيديو",
+                                "الدولة",
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16,
                                 ),
                               ),
-                              trailing: Icon(
-                                Icons.video_camera_back_outlined,
-                                color: Color(0xFF0E7886),
+                              trailing: Text(
+                                "مصر          ",
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
                           ],

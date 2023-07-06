@@ -40,14 +40,15 @@ class _LogInState extends State<LogIn> {
           email = await CacheHelper.getData(key: 'email');
           token = await CacheHelper.getData(key: 'token');
           userID = await CacheHelper.getData(key: 'userID');
-
-
+          userID2 = await CacheHelper.getData(key: 'userID');
+          
+          showMessage(message: 'تم تسجيل الدخول بنجاح', state: ToastStates.success);
 
 
         }
         if(state is LoginErrorState)
         {
-          print("####Login Failed");
+          showMessage(message: 'خطأ في البيانات', state: ToastStates.error);
         }
 
       } ,

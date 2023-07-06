@@ -1,10 +1,10 @@
 class TopRanking {
-  List<PostsData> data = [];
+  List<PostsDataTop> data = [];
 
 
   TopRanking.fromJson(Map<String, dynamic> json) {
       json['users'].forEach((v) {
-        data.add(new PostsData.fromJson(v));
+        data.add(new PostsDataTop.fromJson(v));
     }
       );
 
@@ -12,7 +12,7 @@ class TopRanking {
 
 }
 
-class PostsData {
+class PostsDataTop {
   late int userId;
   late String name;
   late String postsCount;
@@ -20,7 +20,7 @@ class PostsData {
   late List<dynamic> media;
 
 
-  PostsData.fromJson(Map<String, dynamic> json) {
+  PostsDataTop.fromJson(Map<String, dynamic> json) {
     userId = json['id'];
     name = json['name'];
     postsCount = json['posts_count'];

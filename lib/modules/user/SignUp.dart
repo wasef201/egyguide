@@ -38,11 +38,11 @@ class _SignUpState extends State<SignUp> {
           userID = await CacheHelper.getData(key: 'userID');
 
 
-          print("token: ${token} ## email: ${email} ## username: ${username}");
 
         }
         if (state is RegisterErrorState)
-          print('Error Data');
+          showMessage(message: 'خطأ في البيانات', state: ToastStates.success);
+
       },
       builder: (context, state) {
         var cubit = LoginCubit.get(context);
