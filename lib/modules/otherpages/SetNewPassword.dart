@@ -67,17 +67,20 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                 child: Column(
                   children: [
                     InputWidget(
-                        hintText: "Enter previous password", invisible: true),
+                      type: 'Old Password',
+                        hintText: "", invisible: true),
                     SizedBox(
                       height: 20,
                     ),
                     InputWidget(
-                        hintText: "Enter new password", invisible: true),
+                      type: 'New password' ,
+                        hintText: "", invisible: true),
                     SizedBox(
                       height: 20,
                     ),
                     InputWidget(
-                        hintText: "Confirm new password", invisible: true),
+                      type: 'Confirm New password',
+                        hintText: "", invisible: true),
                     SizedBox(
                       height: 20,
                     ),
