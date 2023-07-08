@@ -47,11 +47,6 @@ class _HomeState extends State<Home> {
           setState(() {
             _page = index;
           });
-          /*index == 1
-              ? _drawerKey.currentState?.openDrawer()
-              : setState(() {
-            _page = index;
-          });*/
         }
 
         return Container(

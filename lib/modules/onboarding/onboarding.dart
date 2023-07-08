@@ -1,23 +1,53 @@
-import 'package:egyuide/layout/home.dart';
 import 'package:egyuide/modules/user/login.dart';
 import 'package:egyuide/utilities/cache_helper.dart';
+import 'package:egyuide/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+class OnBoardingModel {
+  String? image = 'a';
+  String? lottieBuilder = 'a';
+  final String title;
+  final String body;
+
+  OnBoardingModel(
+      {this.image, required this.title, required this.body, this.lottieBuilder});
+}
+
 class Onboard extends StatefulWidget {
+  Onboard({Key? key}) : super(key: key);
+
   @override
   State<Onboard> createState() => _OnboardState();
 }
 
 class _OnboardState extends State<Onboard> {
-  final controller = PageController();
+  List<OnBoardingModel> boardingItems = [
+    OnBoardingModel(
+      image: 'assets/imges/amico.png',
+      lottieBuilder: 'a',
+      title: 'اهلا بك في ايجي جايد',
+      body:
+      'هل انت في زيارة لأماكن جديدة ولا تعلم ماذا تفعل؟ في ايجي جايد نساعدك على تحديد موقعك ومعرفة ما يمكنك فعله أين تأكل! وأين تستريح! وأين أقرب فندق لك!',
+    ),
+    OnBoardingModel(
+      image: 'a',
+      lottieBuilder: 'assets/json/on2.json',
+      title: 'قائمة بأفضل المطاعم',
+      body:
+      'هل أنت جائع الأن ؟ نعطيك قائمة بأفضل المطاعم في المدينة التي انت فيها وبتقييمات مصورة داخل المطاعم وعربات الاكل المتنقلة لكي تختار الاكل المناسب لك',
+    ),
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+    OnBoardingModel(
+      image: 'a',
+      lottieBuilder: 'assets/json/on3.json',
+      title: 'تقييمات لجميع الأماكن',
+      body: '      تقييمات كاملة لأشهر المطاعم والأماكن السياحية مع تجربة حصرية بالفيديو لجميع الأماكن داخل مصر',
+    ),
+  ];
+
+  var pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,170 +56,179 @@ class _OnboardState extends State<Onboard> {
         child: Column(
           children: [
             Expanded(
-              child: PageView(
-                children: [
-                  Column(
-                    children: [
-                      Image(
-                        image: AssetImage('assets/imges/amico.png'),
-                        width: double.infinity,
-                      ),
-                      Text(
-                        'اهلا بك في ايجي جايد ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 26),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          'هل انت في زيارة لأماكن جديدة ولا تعلم ماذا تفعل؟     في ايجي جايد نساعدك علي تحديد موقعك ومعرفة ما يمكنك ان تفعله أين تأكل!  وأين تستريح!  واين أقرب فندق لك! ',
-                          style:
-                              TextStyle(color: Color(0xff8c8c8c), fontSize: 18),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 50,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: LottieBuilder.asset('assets/json/on2.json'),
-                      ),
-                      SizedBox(
-                        height: 60,
-                      ),
-                      Text(
-                        'قائمة بأفضل المطاعم',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 26),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          'هل انت جائع الأن ؟ نعطيك قائمة بأفضل المطاعم في المدينة التي انت فيها وبتقييمات مصورة داخل المطاعم وعربات الاكل المتنقلة لكي تختار الاكل المناسب لك',
-                          style:
-                              TextStyle(color: Color(0xff8c8c8c), fontSize: 18),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 50,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: LottieBuilder.asset('assets/json/on3.json'),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        'تقييمات لجميع الأماكن',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 26),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          'تقييمات كاملة لأشهر المطاعم والأماكن السياحية مع تجربة حصرية بالفيديو لجميع الأماكن داخل مصر',
-                          style:
-                              TextStyle(color: Color(0xff8c8c8c), fontSize: 18),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-                controller: controller,
+              child: PageView.builder(
+                itemBuilder: (context, index) =>
+                    OnBoardingItem(
+                      model: boardingItems[index],
+                    ),
+                itemCount: boardingItems.length,
+                controller: pageController,
                 physics: BouncingScrollPhysics(),
               ),
             ),
-            SmoothPageIndicator(
-                controller: controller,
-                count: 3,
-                effect: JumpingDotEffect(
-                    activeDotColor: Color(0xe400658c),
-                    dotWidth: 30,
-                    dotHeight: 5)),
+            Container(
+              color: Colors.grey.withOpacity(0.1),
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: [
+                SmoothPageIndicator(
+                controller: pageController,
+                count: boardingItems.length,
+                effect: ExpandingDotsEffect(
+                  activeDotColor: sc,
+                  dotHeight: 7,
+                  dotWidth: 7,
+                  spacing: 10,
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Material(
+                borderRadius: BorderRadius.circular(20),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: MaterialButton(
+                    onPressed: () {
+                      setState(() {
+                        if (pageController.page!.toInt() ==
+                            boardingItems.length - 1) {
+                          CacheHelper.saveData(key: 'onBoarding', value: true);
+                          NavigateToAndFinish(context, widget: LogIn());
+                        } else {
+                          pageController.nextPage(
+                              duration: Duration(
+                                milliseconds: 500,
+                              ),
+                              curve: Curves.easeInOutExpo);
+                        }
+                      });
+                    },
+                    minWidth: MediaQuery.of(context).size.width,
+                height: 50,
+                color: sc,
+                child: Text(
+                  'التالي',
+                  style: TextStyle(fontSize: 17,),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+                  Material(
+                    borderRadius: BorderRadius.circular(20),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: MaterialButton(
+                      onPressed: () {
+                        CacheHelper.saveData(key: 'onBoarding', value: true);
+                        NavigateToAndFinish(context, widget: LogIn());
+                      },
+                      minWidth: MediaQuery.of(context).size.width,
+                      height: 50,
+                      color: Color(0xfffde2e4),
+                      child: Text(
+                        'تخطي',
+                        style: TextStyle(fontSize: 17,color: Color(0xffFF757C),),
+                      ),
+                    ),
+                  ),
+            Material(
+              borderRadius: BorderRadius.circular(20),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+            ),
             SizedBox(
               height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.all(12.0),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  padding: EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 0,
-                    bottom: 0,
-                  ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      border: Border.all(color: Color(0xffff757c))),
-                  child: MaterialButton(
-                    onPressed: () {
-                      CacheHelper.saveData(key: 'onBoarding', value: true);
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => LogIn(),
-                      ));
-                    },
-                    child: Text('تخطي', style: TextStyle(color: Colors.black)),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(12.0),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  padding: EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 0,
-                    bottom: 0,
-                  ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      color: Color(0xffff757c),
-                      border: Border.all(color: Color(0xffff757c))),
-                  child: MaterialButton(
-                    onPressed: () {
-                      if (controller.page!.round() == 2) {
-                        CacheHelper.saveData(key: 'onBoarding', value: true);
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => LogIn(),
-                        ));
-                      } else {
-                        controller.nextPage(
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.bounceIn);
-                      }
-                    },
-                    child:
-                        Text('التالي', style: TextStyle(color: Colors.white)),
-                  ),
-                ),
-              ],
             ),
           ],
         ),
       ),
+      ],
+    ),)
+    ,
+    );
+  }
+}
+
+class OnBoardingItem extends StatelessWidget {
+  final OnBoardingModel model;
+
+  const OnBoardingItem({super.key, required this.model});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        if(model.image == 'a')
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: LottieBuilder.asset(model!.lottieBuilder ?? 'asd'),
+          ),
+        if(model.lottieBuilder =='a')
+          Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Image(
+            image: AssetImage(model!.image ?? 'p1') ,
+            width: 320,
+          ),
+        ),
+
+
+        SizedBox(
+          height: 20,
+        ),
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 15,
+              horizontal: 10,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Container(
+                  height: 3,
+                  width: 50,
+                  color: Colors.grey,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  model.title,
+                  style: const TextStyle(
+                    color: sc,
+                    fontSize: 25,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  model.body,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 16,
+                  ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
