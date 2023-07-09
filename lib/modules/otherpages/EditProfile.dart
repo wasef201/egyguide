@@ -20,19 +20,19 @@ class _EditProfileState extends State<EditProfile> {
         var cubit = AppCubit.get(context);
         return Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
+          backgroundColor: cubit.darkMode ? Color(0xff0E1D36) : Colors.white,
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: Colors.white,
+            backgroundColor: cubit.darkMode ? Color(0xff0E1D36) : Colors.white,
             leading: BackButton(
-              color: Color(0xFF0E7886),
+              color: cubit.darkMode ? sc : Color(0xFF0E7886),
             ),
             title: Text(
               "Edit Profile",
               style: TextStyle(
                 fontSize: 20,
                 //fontWeight: FontWeight.bold,
-                color: Color(0xFF0E7886),
+                color: cubit.darkMode ? sc : Color(0xFF0E7886),
               ),
             ),
           ),
@@ -46,9 +46,7 @@ class _EditProfileState extends State<EditProfile> {
                       children: [
                         CircleAvatar(
                           radius: 50,
-                          child: Image(
-                            image: AssetImage(cubit.userProfile.avatar),
-                          ),
+                          backgroundImage:NetworkImage(cubit.userProfile.avatar),
                         ),
                         Positioned(
                             bottom: 0,
@@ -153,6 +151,7 @@ class InputWidget extends StatelessWidget {
             border: InputBorder.none,
             contentPadding: EdgeInsets.only(top: 14.0),
             labelText: type,
+            labelStyle: TextStyle(color: AppCubit.get(context).darkMode ? Color(0xff0E1D36): Colors.blue),
             hintStyle: kHintTextStyle,
           ),
         ),
@@ -171,7 +170,7 @@ class BottomButton extends StatelessWidget {
       width: 120,
       height: 50,
       decoration: BoxDecoration(
-        color: Color(0xFF0E7886),
+        color: AppCubit.get(context).darkMode ? sc : Color(0xFF0E7886),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Center(

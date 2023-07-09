@@ -1,7 +1,10 @@
+import 'package:egyuide/layout/cubit/cubit.dart';
+import 'package:egyuide/layout/cubit/states.dart';
 import 'package:egyuide/modules/user/login.dart';
 import 'package:egyuide/utilities/cache_helper.dart';
 import 'package:egyuide/utilities/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -51,100 +54,106 @@ class _OnboardState extends State<Onboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                itemBuilder: (context, index) =>
-                    OnBoardingItem(
-                      model: boardingItems[index],
-                    ),
-                itemCount: boardingItems.length,
-                controller: pageController,
-                physics: BouncingScrollPhysics(),
+    return BlocConsumer<AppCubit,AppStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = AppCubit.get(context);
+        return Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: PageView.builder(
+                  itemBuilder: (context, index) =>
+                      OnBoardingItem(
+                        model: boardingItems[index],
+                      ),
+                  itemCount: boardingItems.length,
+                  controller: pageController,
+                  physics: BouncingScrollPhysics(),
+                ),
               ),
-            ),
-            Container(
-              color: Colors.grey.withOpacity(0.1),
-              padding: EdgeInsets.all(10),
-              child: Column(
-                children: [
-                SmoothPageIndicator(
-                controller: pageController,
-                count: boardingItems.length,
-                effect: ExpandingDotsEffect(
-                  activeDotColor: sc,
-                  dotHeight: 7,
-                  dotWidth: 7,
-                  spacing: 10,
+              Container(
+                color: Colors.grey.withOpacity(0.1),
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                  SmoothPageIndicator(
+                  controller: pageController,
+                  count: boardingItems.length,
+                  effect: ExpandingDotsEffect(
+                    activeDotColor: sc,
+                    dotHeight: 7,
+                    dotWidth: 7,
+                    spacing: 10,
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Material(
+                  borderRadius: BorderRadius.circular(20),
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  child: MaterialButton(
+                      onPressed: () {
+                        setState(() {
+                          if (pageController.page!.toInt() ==
+                              boardingItems.length - 1) {
+                            CacheHelper.saveData(key: 'onBoarding', value: true);
+                            NavigateToAndFinish(context, widget: LogIn());
+                          } else {
+                            pageController.nextPage(
+                                duration: Duration(
+                                  milliseconds: 500,
+                                ),
+                                curve: Curves.easeInOutExpo);
+                          }
+                        });
+                      },
+                      minWidth: MediaQuery.of(context).size.width,
+                  height: 50,
+                  color: sc,
+                  child: Text(
+                    'التالي',
+                    style: TextStyle(fontSize: 17,),
+                  ),
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 10,
               ),
+                    Material(
+                      borderRadius: BorderRadius.circular(20),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: MaterialButton(
+                        onPressed: () {
+                          CacheHelper.saveData(key: 'onBoarding', value: true);
+                          NavigateToAndFinish(context, widget: LogIn());
+                        },
+                        minWidth: MediaQuery.of(context).size.width,
+                        height: 50,
+                        color: cubit.darkMode ? Colors.grey : Color(0xfffde2e4) ,
+                        child: Text(
+                          'تخطي',
+                          style: TextStyle(fontSize: 17,color: cubit.darkMode ? Colors.white : Color(0xffFF757C),),
+                        ),
+                      ),
+                    ),
               Material(
                 borderRadius: BorderRadius.circular(20),
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: MaterialButton(
-                    onPressed: () {
-                      setState(() {
-                        if (pageController.page!.toInt() ==
-                            boardingItems.length - 1) {
-                          CacheHelper.saveData(key: 'onBoarding', value: true);
-                          NavigateToAndFinish(context, widget: LogIn());
-                        } else {
-                          pageController.nextPage(
-                              duration: Duration(
-                                milliseconds: 500,
-                              ),
-                              curve: Curves.easeInOutExpo);
-                        }
-                      });
-                    },
-                    minWidth: MediaQuery.of(context).size.width,
-                height: 50,
-                color: sc,
-                child: Text(
-                  'التالي',
-                  style: TextStyle(fontSize: 17,),
-                ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-                  Material(
-                    borderRadius: BorderRadius.circular(20),
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: MaterialButton(
-                      onPressed: () {
-                        CacheHelper.saveData(key: 'onBoarding', value: true);
-                        NavigateToAndFinish(context, widget: LogIn());
-                      },
-                      minWidth: MediaQuery.of(context).size.width,
-                      height: 50,
-                      color: Color(0xfffde2e4),
-                      child: Text(
-                        'تخطي',
-                        style: TextStyle(fontSize: 17,color: Color(0xffFF757C),),
-                      ),
-                    ),
-                  ),
-            Material(
-              borderRadius: BorderRadius.circular(20),
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-          ],
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
         ),
-      ),
-      ],
-    ),)
-    ,
+        ],
+      ),)
+      ,
+      );
+      },
     );
   }
 }

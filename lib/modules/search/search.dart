@@ -22,8 +22,8 @@ class SearchPage extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                mc,
-                sc,
+                cubit.darkMode ? Color(0xff0E1D36) : mc,
+                cubit.darkMode ? Color(0xff0E1D36) : sc,
               ],
               begin: AlignmentDirectional.topCenter,
               end: AlignmentDirectional.bottomCenter,
@@ -31,7 +31,7 @@ class SearchPage extends StatelessWidget {
           ),
           child: SafeArea(
             child: Scaffold(
-              backgroundColor: Color(0xd9ffffff),
+              backgroundColor: cubit.darkMode ? Color(0xff0E1D36) : Color(0xd9ffffff),
               appBar: AppBar(
                 toolbarHeight: MediaQuery.of(context).size.height * 0.1,
                 title: Container(
@@ -40,7 +40,7 @@ class SearchPage extends StatelessWidget {
                   ),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: cubit.darkMode ? Colors.blueGrey : Colors.white,
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all()),
                   child: TextFormField(
@@ -72,7 +72,7 @@ class SearchPage extends StatelessWidget {
                           size: 30,
                         )),
                 ],
-                backgroundColor: mc,
+                backgroundColor: cubit.darkMode ? Color(0xff0E1D36) : mc,
                 elevation: 0,
               ),
               body: WillPopScope(
@@ -102,7 +102,7 @@ class SearchPage extends StatelessWidget {
 
                             return Container(
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: cubit.darkMode ? mc.withOpacity(0.3) : Colors.white,
                                   borderRadius: BorderRadiusDirectional.all(
                                     Radius.circular(10),
                                   )),

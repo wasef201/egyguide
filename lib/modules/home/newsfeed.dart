@@ -90,7 +90,7 @@ class News extends StatelessWidget {
               cubit.istTopRankedGet &&
               state is! UserProfileDataLoadingState &&
               state is! GetFollowDataLoading &&
-              state is! GetFollowDataLoading,
+              state is! TopRankedLoadingState,
           builder: (BuildContext context) => SafeArea(
             bottom: false,
             child: Padding(
@@ -126,7 +126,7 @@ class News extends StatelessWidget {
                                   },
                                   icon: CircleAvatar(
                                       backgroundColor: Color(0x4dffffff),
-                                      child: Icon(Icons.search_rounded)),
+                                      child: Icon(Icons.search_rounded,)),
                                   color: mc,
                                 ),
                                 IconButton(
@@ -247,7 +247,7 @@ class News extends StatelessWidget {
                               else {
                                 return Container(
                                   decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: cubit.darkMode ? mc.withOpacity(0.3) : Colors.white,
                                       borderRadius: BorderRadiusDirectional.all(
                                         Radius.circular(10),
                                       )),
@@ -354,7 +354,7 @@ class News extends StatelessWidget {
                                                       },
                                                       icon: Icon(
                                                         Icons.group_remove_outlined,
-                                                        color: Colors.white,
+                                                        color: cubit.darkMode ? Color(0xff0E1D36) : Colors.white,
                                                       )),
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius:
@@ -415,10 +415,10 @@ class News extends StatelessWidget {
                                                   aspectRatio: 16 / 9,
                                                   controlsConfiguration:
                                                   BetterPlayerControlsConfiguration(
-/*
+
                                                     showControls: true,
                                                     showControlsOnInitialize: false,
-*/
+
                                                     enableProgressBar: true,
                                                     enableSkips: false,
                                                     enableOverflowMenu:
@@ -428,7 +428,7 @@ class News extends StatelessWidget {
                                                     enableSubtitles: false,
                                                     enablePip: false,
                                                     backgroundColor:
-                                                    Color(0xFFFFFFFF),
+                                                    cubit.darkMode ? Color(0xff0E1D36) : Color(0xFFFFFFFF),
                                                     controlsHideTime:
                                                     Duration(
                                                         milliseconds:

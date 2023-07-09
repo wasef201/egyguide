@@ -17,17 +17,13 @@ class LoginCubit extends Cubit<LoginStates> {
 }) {
     emit(LoginLoadingState());
     DioHelper.postData(
-      url: LOGIN,
-      data: {
-        'email':email,
-        'password':password,
-      },
+      url: '$LOGIN?email=$email&password=$password',
     ).then((value) {
       loginModel = LoginModel.fromJson(value.data);
       print(value);
-
       emit(LoginSuccessState(loginModel));
     }).catchError((error){
+      print(error);
       emit(LoginErrorState(error.toString()));
     });
   }
@@ -42,7 +38,7 @@ class LoginCubit extends Cubit<LoginStates> {
   })
   {
     emit(RegisterLoadingState());
-    DioHelper.postData(url: REGISTER, data:
+    DioHelper.postData(url: REGISTER, query:
     {
       'name' : username,
       'email' : email,

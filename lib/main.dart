@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:egyuide/layout/cubit/cubit.dart';
+import 'package:egyuide/layout/cubit/states.dart';
 import 'package:egyuide/layout/home.dart';
 import 'package:egyuide/modules/onboarding/onboarding.dart';
 import 'package:egyuide/modules/user/cubit/cubit.dart';
@@ -25,6 +26,7 @@ Future<void> main() async {
   username = await CacheHelper.getData(key: 'username');
   email = await CacheHelper.getData(key: 'email');
   userID = await CacheHelper.getData(key: 'userID');
+  darkmode = await CacheHelper.getData(key: 'darkMode') ?? false;
 
   if (onBoarding != null) {
     if (token != null) {
@@ -48,27 +50,40 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MultiBlocProvider(
       providers:
       [
         BlocProvider( create: (context) => AppCubit()..getHomePosts()..getTopRanked()..updatedUnFollowedUsers()),
         BlocProvider( create: (context) => LoginCubit(),),
       ],
-      child: MaterialApp(
-        home: Splash(
-          widget: widget,
-        ),
-        debugShowCheckedModeBanner: false,
-        title: 'Egy Guide',
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: [
-          Locale('ar'), // English
-        ],
-        theme: ThemeData(fontFamily: 'cairo'),
+      child: BlocConsumer<AppCubit,AppStates>(
+        listener: (context, state) {},
+        builder:(context, state) {
+          var cubit = AppCubit.get(context);
+          cubit.darkMode = darkmode;
+          return MaterialApp(
+          home: Splash(
+            widget: widget,
+          ),
+          debugShowCheckedModeBanner: false,
+          title: 'Egy Guide',
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            Locale('ar'), // English
+          ],
+          theme: ThemeData(fontFamily: 'cairo'),
+          themeMode: cubit.darkMode  ? ThemeMode.dark : ThemeMode.light,
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            scaffoldBackgroundColor: Colors.black45,
+          ),
+        );
+        },
       ),
     );
   }

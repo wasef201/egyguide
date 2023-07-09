@@ -28,18 +28,18 @@ class CreatePost extends StatelessWidget {
       builder: (context, state) {
         var cubit = AppCubit.get(context);
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: cubit.darkMode ? Color(0xff0E1D36) : Colors.white,
           appBar: AppBar(
             titleSpacing: 0,
             elevation: 0,
-            backgroundColor: Colors.white,
+            backgroundColor: cubit.darkMode ? Color(0xff0E1D36) : Colors.white,
             leading: BackButton(
-              color: kBlue,
+              color: cubit.darkMode ? sc : kBlue,
             ),
             title: Text(
               "اضافة ريلرز",
               style: TextStyle(
-                color: kBlue,
+                color: cubit.darkMode ? sc : kBlue,
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w600,
                 fontSize: 16,

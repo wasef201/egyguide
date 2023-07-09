@@ -1,3 +1,4 @@
+import 'package:egyuide/layout/cubit/cubit.dart';
 import 'package:egyuide/modules/user/ForgetPassword.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -74,8 +75,8 @@ class socialLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return PhysicalModel(
       borderRadius: BorderRadius.circular(25),
-      color: Colors.white,
-      elevation: 6,
+      color: AppCubit.get(context).darkMode ? Color(0xff0E1D36) : Colors.white,
+      elevation: AppCubit.get(context).darkMode ? 2 : 6,
       shadowColor: Colors.grey,
       child: ListTile(
         leading: this.icon,
@@ -95,8 +96,8 @@ class socialLinkWithImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PhysicalModel(
       borderRadius: BorderRadius.circular(25),
-      color: Colors.white,
-      elevation: 6,
+      color: AppCubit.get(context).darkMode ? Color(0xff0E1D36) : Colors.white,
+      elevation: AppCubit.get(context).darkMode ? 2: 6,
       shadowColor: Colors.grey,
       child: ListTile(
         leading: Image(
@@ -146,19 +147,6 @@ class wideActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   decoration: BoxDecoration(
-    //     color: Color(0xFFFF757C),
-    //     borderRadius: BorderRadius.circular(20),
-    //   ),
-    //   child: Center(
-    //     child: Text(
-    //       hint,
-    //       textAlign: TextAlign.center,
-    //       style: kWideActionButtonStyle,
-    //     ),
-    //   ),
-    // );
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
       child: MaterialButton(
@@ -283,7 +271,7 @@ class redircetText extends StatelessWidget {
           fontSize: 15,
           fontFamily: 'Poppins',
           fontWeight: FontWeight.w200,
-          color: Color(0xFFFF757C),
+          color:Color(0xFFFF757C),
         ),
       ),
     );

@@ -96,6 +96,9 @@ class getSearchLoading extends AppStates{}
 class getSearchSuccess extends AppStates{}
 class getSearcherror extends AppStates{}
 
+class DarkModeChangedLoading extends AppStates{}
+class DarkModeChangedSuccess extends AppStates{}
+
 
 class ChangeCounter2Value extends AppStates{}
 

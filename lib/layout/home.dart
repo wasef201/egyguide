@@ -59,86 +59,7 @@ class _HomeState extends State<Home> {
 
           ),
           child: Scaffold(
-            backgroundColor: Color(0xd9ffffff),
-            key: _drawerKey,
-            drawer:   Drawer(
-
-              child:        Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () {},
-                    child: Stack(
-                      alignment: AlignmentDirectional.bottomEnd,
-                      children: [
-                        Column(
-                          children: [
-                            Container(
-                              height: 70,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [
-                                        lc,
-                                        sc,
-                                      ],
-                                      begin: AlignmentDirectional.topStart,
-                                      end: AlignmentDirectional.bottomEnd),
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(100))),
-                              child: Padding(
-                                padding: EdgeInsets.all(4),
-                                child: Container(
-                                  padding: EdgeInsets.all(3),
-                                  height: 65,
-                                  width: 65,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(50))),
-                                  child: CircleAvatar(
-                                    backgroundImage:
-                                    AssetImage('assets/imges/p2.webp'),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text('عمرو المحمدي')
-                          ],
-                        ),
-                        Container(
-                          padding: EdgeInsetsDirectional.only(
-                            bottom: 23,
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.all(2),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(50))),
-                            child: CircleAvatar(
-                              backgroundColor: mc,
-                              child: SvgPicture.asset(
-                                cert,
-                                color: Colors.white,
-                                semanticsLabel: 'role',
-                                height: 15,
-                              ),
-                              radius: 15,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                ],
-              ),
-            ),
-
+            backgroundColor: cubit.darkMode ? Color(0xff0E1D36) : Color(0xd9ffffff),
             body:screens[_page],
             extendBody: true,
             floatingActionButton: FloatingActionButton(
@@ -150,9 +71,9 @@ class _HomeState extends State<Home> {
                 ));
               },
               child:
-              Icon(Icons.add, size: 30),
+              Icon(Icons.add, size: 30,color: Colors.white,),
 
-              backgroundColor: Color(0xffff757c),
+              backgroundColor:cubit.darkMode ? mc : Color(0xffff757c),
 
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -175,7 +96,7 @@ class _HomeState extends State<Home> {
 
               onTap: _onItemTapped,
 
-              backgroundColor: Color(0x33fba8ac),
+              backgroundColor:Color(0x33fba8ac),
               activeColor: Color(0xffffffff),
               blurEffect: true,
 

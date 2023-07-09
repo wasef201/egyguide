@@ -37,8 +37,8 @@ class _ProfilePageState extends State<ProfilePage> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                   colors: [
-                    Color(0xffe5f8f6),
-                    Color(0xffffeeee),
+                    cubit.darkMode ? Color(0xff0E1D36) : Color(0xffe5f8f6),
+                    cubit.darkMode ? Color(0xff0E1D36) :Color(0xffffeeee),
                   ],
                   stops: [
                     0.1,
@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   padding: EdgeInsetsDirectional.only(start: 15),
                   child: Text(
                     'الصفحة الشخصية',
-                    style: TextStyle(color: mc),
+                    style: TextStyle(color: cubit.darkMode ? sc : mc),
                   ),
                 ),
                 actions: [
@@ -69,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditProfile(),));
                     },
                     icon: Icon(Icons.edit),
-                    color: mc,
+                    color: cubit.darkMode ? sc :  mc,
                   ),
                   SizedBox(
                     width: 20,
@@ -178,7 +178,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Image.asset(
-                            'assets/imges/topper.png',
+                            cubit.darkMode ? 'assets/imges/topper-darkmode.png': 'assets/imges/topper.png',
                             width: MediaQuery.of(context).size.width,
                             fit: BoxFit.fitWidth,
                           ),
@@ -200,7 +200,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             elevation: 5,
                             padding: EdgeInsets.all(17),
-                            color: Colors.white,
+                            color: cubit.darkMode ? Colors.blueGrey : Colors.white,
                             minWidth: 15,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15)),
@@ -210,7 +210,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                     Container(
-                      color: Colors.white,
+                      color: cubit.darkMode ? mc.withOpacity(0.4) : Colors.white,
                       width: MediaQuery.of(context).size.width,
                       height: 500,
                       child: Column(
@@ -341,7 +341,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                                       return Container(
                                         decoration: BoxDecoration(
-                                            color: Colors.white,
+                                            color: cubit.darkMode ? Color(0xff0E1D36) : Colors.white,
                                             borderRadius:
                                             BorderRadiusDirectional.all(
                                               Radius.circular(10),

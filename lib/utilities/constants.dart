@@ -23,7 +23,7 @@ final kHintTextStyle = TextStyle(
 );
 
 final kInputFieldStyle = BoxDecoration(
-  color: Colors.white,
+  color: darkmode ?  Colors.grey[600] : Colors.white,
   borderRadius: BorderRadius.circular(20.0),
   boxShadow: [
     BoxShadow(
@@ -57,7 +57,7 @@ const Color lc = Color(0xff19bcce);
 const Color sc = Color(0xffff757c);
 
 final kWhiteInputFieldStyle = BoxDecoration(
-  color: Colors.white,
+  color: darkmode ? Color(0xff0E1D36) : Colors.white,
   borderRadius: BorderRadius.circular(20.0),
 );
 
@@ -89,6 +89,7 @@ Future NavigateToAndFinish(
   String? email;
   int? userID;
   int? userID2;
+  bool darkmode = false;
 
   List<String> itemsState = ['Dakahlia','Red Sea','Beheira','Fayoum','Gharbiya','Ismailia','Giza','Menofia','Minya','Cairo','Alexandria',
   'Qaliubiya','New Valley','Suez','Aswan','Assiut','Beni Suef','Port Said','Damietta','Sharkia','South Sinai',

@@ -1,7 +1,5 @@
-import 'dart:ffi';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:egyuide/layout/cubit/states.dart';
 import 'package:egyuide/models/HomeModel.dart';
 import 'package:egyuide/models/SearchPosts.dart';
@@ -399,6 +397,16 @@ class AppCubit extends Cubit<AppStates> {
       print(error.toString());
       emit(getSearcherror());
     });
+  }
+
+  // Dark Mode
+  bool darkMode = darkmode;
+  void changeDarkMode({required bool darkmode2})
+  {
+    emit(DarkModeChangedLoading());
+    darkmode = darkmode2;
+    darkMode = darkmode2;
+    emit(DarkModeChangedSuccess());
   }
 }
 

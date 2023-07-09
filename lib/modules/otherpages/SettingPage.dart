@@ -34,21 +34,21 @@ class _SettingPageState extends State<SettingPage> {
       builder: (context, state) {
         var cubit = AppCubit.get(context);
         return Scaffold(
-          backgroundColor: Color(0xFFF2F2F7),
+          backgroundColor: cubit.darkMode ? Color(0xff0E1D36) : Color(0xFFF2F2F7),
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(top: 15.0),
               child: Column(
                 children: [
                   Container(
-                    color: Color(0xFFF2F2F7),
+                    color: cubit.darkMode ? Color(0xff0E1D36) : Color(0xFFF2F2F7),
                     child: Center(
                       child: Text(
                         "Settings",
                         style: TextStyle(
                             fontSize: 25.0,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF0E7886)),
+                            color: cubit.darkMode ? sc : Color(0xFF0E7886)),
                       ),
                     ),
                   ),
@@ -60,6 +60,12 @@ class _SettingPageState extends State<SettingPage> {
                         settingsSectionBackground: Colors.white,
                         dividerColor: Colors.grey,
                         tileHighlightColor: Colors.grey,
+                      ),
+                      darkTheme: SettingsThemeData(
+                        settingsListBackground: Color(0xff0E1D36),
+                        settingsSectionBackground: mc.withOpacity(0.2),
+                        dividerColor: Colors.blue,
+                        tileHighlightColor: Colors.blueGrey,
                       ),
                       sections: [
                         SettingsSection(
@@ -171,14 +177,21 @@ class _SettingPageState extends State<SettingPage> {
                           ),
                           tiles: <SettingsTile>[
                             SettingsTile.switchTile(
-                              onToggle: (value) {},
-                              initialValue: true,
+                              onToggle: (value)
+                              {
+                                  CacheHelper.saveData(key: 'cubit.darkMode',value: value);
+                                  cubit.changeDarkMode(darkmode2: value);
+
+
+                              },
+
+                              initialValue: cubit.darkMode ?? false,
                               activeSwitchColor: Color(0xFF0E7886),
                               leading: Icon(
-                                Icons.format_paint,
+                                Icons.brightness_4,
                                 color: Color(0xFF0E7886),
                               ),
-                              title: Text('Enable custom theme'),
+                              title: Text('Enable Dark Mode'),
                             ),
                             SettingsTile.switchTile(
                               onToggle: (value) {},

@@ -47,8 +47,8 @@ class _ShowProfileState extends State<ShowProfile> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                     colors: [
-                      Color(0xffe5f8f6),
-                      Color(0xffffeeee),
+                      cubit.darkMode ? Color(0xff0E1D36) : Color(0xffe5f8f6),
+                      cubit.darkMode ? Color(0xff0E1D36) : Color(0xffffeeee),
                     ],
                     stops: [
                       0.1,
@@ -71,7 +71,7 @@ class _ShowProfileState extends State<ShowProfile> {
                         Navigator.of(context).pop();
                       },
                       icon: Icon(Icons.arrow_forward_outlined),
-                      color: mc,
+                      color: cubit.darkMode ? sc : mc,
                     ),
                     SizedBox(
                       width: 20,
@@ -99,8 +99,8 @@ class _ShowProfileState extends State<ShowProfile> {
                                       shape: BoxShape.circle,
                                       gradient: LinearGradient(
                                         colors: [
-                                          Color(0xff59cdc4),
-                                          Color(0xffef9ca0),
+                                          cubit.darkMode ? Color(0xff0E1D36) : Color(0xff59cdc4),
+                                          cubit.darkMode ? Color(0xff0E1D36) : Color(0xffef9ca0),
                                         ],
                                         begin: Alignment.topCenter,
                                         end: Alignment.bottomCenter,
@@ -112,14 +112,14 @@ class _ShowProfileState extends State<ShowProfile> {
                                         backgroundImage: NetworkImage(cubit.userProfile.avatar),
                                       ),
                                       radius: 33,
-                                      backgroundColor: Colors.white,
+                                      backgroundColor: cubit.darkMode ? mc.withOpacity(0.4) : Colors.white,
                                     ),
                                   ),
                                 ),
                                 Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Colors.white,
+                                      color: cubit.darkMode ? mc.withOpacity(0.4) : Colors.white,
                                       width: 3,
                                     ),
                                     shape: BoxShape.circle,
@@ -183,7 +183,7 @@ class _ShowProfileState extends State<ShowProfile> {
                           Padding(
                             padding: const EdgeInsets.only(top: 20.0),
                             child: Image.asset(
-                              'assets/imges/topper.png',
+                              cubit.darkMode ? 'assets/imges/topper-darkmode.png': 'assets/imges/topper.png',
                               width: MediaQuery.of(context).size.width,
                               fit: BoxFit.fitWidth,
                             ),
@@ -201,7 +201,7 @@ class _ShowProfileState extends State<ShowProfile> {
                               ),
                               elevation: 5,
                               padding: EdgeInsets.all(17),
-                              color: Colors.white,
+                              color: cubit.darkMode ? Colors.blueGrey: Colors.white,
                               minWidth: 15,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15)),
@@ -211,7 +211,7 @@ class _ShowProfileState extends State<ShowProfile> {
                         ],
                       ),
                       Container(
-                        color: Colors.white,
+                        color: cubit.darkMode ? mc.withOpacity(0.4) : Colors.white,
                         width: MediaQuery.of(context).size.width,
                         height: 500,
                         child: Column(
@@ -402,7 +402,7 @@ class _ShowProfileState extends State<ShowProfile> {
 
                                         return Container(
                                           decoration: BoxDecoration(
-                                              color: Colors.white,
+                                              color: cubit.darkMode ? Color(0xff0E1D36) : Colors.white,
                                               borderRadius:
                                                   BorderRadiusDirectional.all(
                                                 Radius.circular(10),
